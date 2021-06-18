@@ -2,10 +2,10 @@
 // run by the browser each time the page is loaded
 
 let Peer = window.Peer;
+let callerID = "cenex_caller";
 
 let messagesEl = document.querySelector(".messages");
-let peerIdEl = document.querySelector("#connect-to-peer");
-let videoEl = document.querySelector(".remote-video");
+let audioEl = document.querySelector(".remote-audio");
 
 let logMessage = (message) => {
   let newMessage = document.createElement("div");
@@ -18,7 +18,7 @@ let renderVideo = (stream) => {
 };
 
 // Register with the peer server
-let peer = new Peer("cenex_caller");
+let peer = new Peer(callerID);
 peer.on("open", (id) => {
   logMessage("My peer ID is: " + id);
 });
@@ -52,10 +52,9 @@ peer.on("call", (call) => {
 
 // Initiate outgoing connection
 let connectToPeer = () => {
-  let peerId = peerIdEl.value;
-  logMessage(`Connecting to ${peerId}...`);
+  logMessage(`Connecting to ${callerID}...`);
 
-  let conn = peer.connect(peerId);
+  let conn = peer.connect(callerID);
   conn.on("data", (data) => {
     logMessage(`received: ${data}`);
   });
@@ -66,7 +65,7 @@ let connectToPeer = () => {
   navigator.mediaDevices
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
-      let call = peer.call(peerId, stream);
+      let call = peer.call(callerID, stream);
       call.on("stream", renderVideo);
     })
     .catch((err) => {
