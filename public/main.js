@@ -13,8 +13,8 @@ let logMessage = (message) => {
   messagesEl.appendChild(newMessage);
 };
 
-let renderVideo = (stream) => {
-  videoEl.srcObject = stream;
+let renderAudio = (stream) => {
+  audioEl.srcObject = stream;
 };
 
 // Register with the peer server
@@ -66,7 +66,7 @@ let connectToPeer = () => {
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
       let call = peer.call(callerID, stream);
-      call.on("stream", renderVideo);
+      call.on("stream", renderAudio);
     })
     .catch((err) => {
       logMessage("Failed to get local stream", err);
