@@ -3,7 +3,7 @@
 
 let Peer = window.Peer;
 let callerID = "cenex_caller";
-
+let operatorID = "cenex_operator";
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
 
@@ -52,9 +52,9 @@ peer.on("call", (call) => {
 
 // Initiate outgoing connection
 let connectToPeer = () => {
-  logMessage(`Connecting to ${callerID}...`);
+  logMessage(`Connecting to ${operatorID}...`);
 
-  let conn = peer.connect(callerID);
+  let conn = peer.connect(operatorID);
   conn.on("data", (data) => {
     logMessage(`received: ${data}`);
   });
@@ -65,7 +65,7 @@ let connectToPeer = () => {
   navigator.mediaDevices
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
-      let call = peer.call(callerID, stream);
+      let call = peer.call(operatorID, stream);
       call.on("stream", renderAudio);
     })
     .catch((err) => {
