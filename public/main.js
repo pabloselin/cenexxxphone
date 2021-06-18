@@ -43,7 +43,7 @@ peer.on("call", (call) => {
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
       call.answer(stream); // Answer the call with an A/V stream.
-      call.on("stream", renderVideo);
+      call.on("stream", renderAudio);
     })
     .catch((err) => {
       console.error("Failed to get local stream", err);
