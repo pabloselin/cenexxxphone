@@ -2,7 +2,7 @@
 // run by the browser each time the page is loaded
 
 let Peer = window.Peer;
-let callerID = "cenex_caller_dev";
+let callerID = process.env.CALLER_ID;
 let operatorID = "cenex_operator";
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
