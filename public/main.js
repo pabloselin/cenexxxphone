@@ -2,10 +2,12 @@
 // run by the browser each time the page is loaded
 
 let Peer = window.Peer;
-let callerID = "cenex_caller";
+let callerID = "cenex_caller_dev";
 let operatorID = "cenex_operator";
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
+let radioURL = 'http://134.209.89.225:8000/stream';
+let liveURL = 'http://134.209.89.225:8000/live';
 
 let logMessage = (message) => {
   let newMessage = document.createElement("div");
@@ -59,7 +61,7 @@ let connectToPeer = () => {
     logMessage(`received: ${data}`);
   });
   conn.on("open", () => {
-    conn.send("hi!");
+    conn.send("Conexión establecida con llamador");
   });
 
   navigator.mediaDevices

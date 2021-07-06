@@ -8,20 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A cool thing made with Glitch">
 
-    <title>Llamadora CENEX</title>
+    <title>Fono CENEX</title>
 
     <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css">
 
     <!-- import libraries -->
+    <script src="/lib/howler.min.js"></script>
     <script src="/lib/peerjs.js"></script>
     
     <!-- import the webpage's client-side javascript file -->
     <script src="/main.js" type="module"></script>
   </head>
   <body>
-    <audio class="remote-audio" autoplay></audio>
+
+    <div id="radio">
+      <!-- howler radio with icecast remote-->
+    </div>
+    <p>
+      <audio id="remote-audio" class="remote-audio" src="http://134.209.89.225:8000/stream" controls autoplay></audio>
+    </p>
     <button onclick="connectToPeer()">
       Llamar
     </button>
