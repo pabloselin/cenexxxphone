@@ -3,6 +3,7 @@
 
 let Peer = window.Peer;
 let callerID = process.env.CALLER_ID;
+console.log(process.env);
 let operatorID = "cenex_operator";
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
