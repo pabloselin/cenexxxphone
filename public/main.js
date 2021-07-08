@@ -6,8 +6,9 @@ let callerID = "cenex_caller";
 let operatorID = "cenex_operator";
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
-let radioURL = 'http://134.209.89.225:8000/stream.ogg';
-let liveURL = 'http://134.209.89.225:8000/live.ogg';
+let radioURL = 'https://radio.cenexxx.cl/stream.ogg';
+let liveURL = 'https://radio.cenexxx.cl/live.ogg';
+let isCallActive = false;
 
 let logMessage = (message) => {
   let newMessage = document.createElement("div");
@@ -16,6 +17,7 @@ let logMessage = (message) => {
 };
 
 let renderAudio = (stream) => {
+  console.log('enabling audio');
   audioEl.srcObject = stream;
 };
 
@@ -41,6 +43,7 @@ peer.on("connection", (conn) => {
 
 // Handle incoming voice/video connection
 peer.on("call", (call) => {
+  console.log(navigator.mediaDevices);
   navigator.mediaDevices
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
