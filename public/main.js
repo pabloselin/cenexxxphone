@@ -6,8 +6,8 @@ let callerID = "cenex_caller";
 let operatorID = "cenex_operator";
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
-let radioURL = 'http://134.209.89.225:8000/stream';
-let liveURL = 'http://134.209.89.225:8000/live';
+let radioURL = 'http://134.209.89.225:8000/stream.ogg';
+let liveURL = 'http://134.209.89.225:8000/live.ogg';
 
 let logMessage = (message) => {
   let newMessage = document.createElement("div");
@@ -76,3 +76,23 @@ let connectToPeer = () => {
 };
 
 window.connectToPeer = connectToPeer;
+
+let radio = new Howl({
+  src: [radioURL],
+  html5: true,
+  format: ['ogg']
+});
+
+var buttonPlay = document.getElementById("escuchar");
+var buttonStop = document.getElementById("stop");
+
+buttonPlay.addEventListener('click', function() {
+  console.log('play');
+  console.log(radio);
+  radio.play();
+});
+
+buttonStop.addEventListener('click', function() {
+  console.log('stop');
+  radio.stop();
+});
