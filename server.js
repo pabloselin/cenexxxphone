@@ -4,18 +4,58 @@
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
-
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+var session = require("express-session"),
+bodyParser = require("body-parser");
 const { ExpressPeerServer } = require("peer");
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    username.findOne({ username: username}, function(err, user) {
+      if(err) {
+        return done(err);
+      }
+      if(!user) {
+        return done(null, false, {message: 'Usuario incorrecto.'});
+      }
+      if(!user.validPassword(password)) {
+        return done(null, false, {message: 'Password incorrecto.'});
+      }
+
+      return done(null, user);
+    })
+  }
+));
 
 const app = express();
 
 // make all the files in 'public' available
 // https://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
+app.use(express.static("dist"));
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(session({ secret: 'cenexxxx'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // https://expressjs.com/en/starter/basic-routing.html
+
+app.post("/login", passport.authenticate('local', { successRedirect: '/operadora',
+                                                    failureRedirect: '/login'
+                                                  }));
+
 app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/views/index.html");
+  response.locals.url = request.originalUrl;
+  response.sendFile(__dirname + "/dist/index.html");
+});
+
+app.get("/login", (request, response) => {
+  response.sendFile( __dirname + "/dist/login.html");
+});
+
+app.get("/operadora", (request, response) => {
+  response.locals.url = request.originalUrl;
+  response.sendFile(__dirname + "/dist/operadora.html");
 });
 
 // listen for requests :)

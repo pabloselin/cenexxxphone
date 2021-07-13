@@ -1,14 +1,14 @@
+import Peer from 'peerjs';
 // client-side js, loaded by index.html
 // run by the browser each time the page is loaded
 
-let Peer = window.Peer;
-let callerID = "cenex_caller";
+function startPeerOperator() {
+
 let operatorID = "cenex_operator";
+
 let messagesEl = document.querySelector(".messages");
 let audioEl = document.querySelector(".remote-audio");
-let radioURL = 'https://radio.cenexxx.cl/stream.ogg';
-let liveURL = 'https://radio.cenexxx.cl/live.ogg';
-let isCallActive = false;
+let hasCallActive = false;
 
 let logMessage = (message) => {
   let newMessage = document.createElement("div");
@@ -17,33 +17,32 @@ let logMessage = (message) => {
 };
 
 let renderAudio = (stream) => {
-  console.log('enabling audio');
   audioEl.srcObject = stream;
 };
 
 // Register with the peer server
-let peer = new Peer(callerID);
-peer.on("open", (id) => {
-  logMessage("My peer ID is: " + id);
+let operatorPeer = new Peer(operatorID);
+operatorPeer.on("open", (id) => {
+  logMessage("My operatorPeer ID is: " + id);
 });
-peer.on("error", (error) => {
+operatorPeer.on("error", (error) => {
   console.error(error);
 });
 
 // Handle incoming data connection
-peer.on("connection", (conn) => {
+operatorPeer.on("connection", (conn) => {
   logMessage("incoming peer connection!");
   conn.on("data", (data) => {
     logMessage(`received: ${data}`);
   });
   conn.on("open", () => {
-    conn.send("hello!");
+    conn.send(hasCallActive);
   });
 });
 
 // Handle incoming voice/video connection
-peer.on("call", (call) => {
-  console.log(navigator.mediaDevices);
+operatorPeer.on("call", (call) => {
+  hasCallActive = true;
   navigator.mediaDevices
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
@@ -59,18 +58,18 @@ peer.on("call", (call) => {
 let connectToPeer = () => {
   logMessage(`Connecting to ${operatorID}...`);
 
-  let conn = peer.connect(operatorID);
+  let conn = operatorPeer.connect(operatorID);
   conn.on("data", (data) => {
     logMessage(`received: ${data}`);
   });
   conn.on("open", () => {
-    conn.send("Conexión establecida con llamador");
+    conn.send("hi!");
   });
 
   navigator.mediaDevices
     .getUserMedia({ video: false, audio: true })
     .then((stream) => {
-      let call = peer.call(operatorID, stream);
+      let call = operatorPeer.call(operatorID, stream);
       call.on("stream", renderAudio);
     })
     .catch((err) => {
@@ -80,22 +79,6 @@ let connectToPeer = () => {
 
 window.connectToPeer = connectToPeer;
 
-let radio = new Howl({
-  src: [radioURL],
-  html5: true,
-  format: ['ogg']
-});
+}
 
-var buttonPlay = document.getElementById("escuchar");
-var buttonStop = document.getElementById("stop");
-
-buttonPlay.addEventListener('click', function() {
-  console.log('play');
-  console.log(radio);
-  radio.play();
-});
-
-buttonStop.addEventListener('click', function() {
-  console.log('stop');
-  radio.stop();
-});
+export default startPeerOperator;

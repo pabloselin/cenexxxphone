@@ -1,0 +1,13 @@
+.caller,
+.operadora
+{
+    padding: 12px;
+    background-color: #f0f0f0;
+    margin: 12px;
+}
+
+ button {
+     padding: 6px;
+     font-size: 12px;
+     margin: 12px 0;
+ }
