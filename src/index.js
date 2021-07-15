@@ -14,6 +14,7 @@ console.log('loading stuff');
 let operatorID      =   "cenex_operator";
 let messagesEl      =   document.querySelector(".messages");
 let audioEl         =   document.querySelector(".remote-audio");
+let videoEl         =   document.querySelector("#callvideo");
 let hasCallActive   =   false;
 
 let callerID = guid();
@@ -30,6 +31,7 @@ let renderAudio = (stream) => {
     audioEl.srcObject = stream;
   } else {
     console.log('llamada en progreso...');
+    videoEl.src = './videos/busy.mp4';
     audioEl.destroy();
   }
   

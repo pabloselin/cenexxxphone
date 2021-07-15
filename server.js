@@ -46,16 +46,16 @@ app.post("/login", passport.authenticate('local', { successRedirect: '/operadora
 
 app.get("/", (request, response) => {
   response.locals.url = request.originalUrl;
-  response.sendFile(__dirname + "/dist/index.html");
+  response.sendFile(__dirname + "/dist/html/index.html");
 });
 
 app.get("/login", (request, response) => {
-  response.sendFile( __dirname + "/dist/login.html");
+  response.sendFile( __dirname + "/dist/html/login.html");
 });
 
 app.get("/operadora", (request, response) => {
   response.locals.url = request.originalUrl;
-  response.sendFile(__dirname + "/dist/operadora.html");
+  response.sendFile(__dirname + "/dist/html/operadora.html");
 });
 
 // listen for requests :)
