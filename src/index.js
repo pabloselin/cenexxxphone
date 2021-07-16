@@ -58,6 +58,10 @@ function startPeer() {
 
   // Register with the peer server
   let peer = new Peer({
+    host: "radio.cenexxx.cl",
+    path: "/cenexxxpeerserver",
+    port: 9000,
+    key: "cenexxx",
     config: {
       iceServers: [
         {

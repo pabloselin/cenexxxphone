@@ -23,6 +23,10 @@ function startPeerOperator() {
 
   // Register with the peer server
   let operatorPeer = new Peer(operatorID, {
+    host: "radio.cenexxx.cl",
+    path: "/cenexxxpeerserver",
+    port: 9000,
+    key: "cenexxx",
     config: {
       iceServers: [
         {
