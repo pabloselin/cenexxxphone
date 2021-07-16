@@ -1,8 +1,10 @@
 import Peer from "peerjs";
+import animate from "animate.css";
 
-import { guid } from "./utils";
+import { guid, handlePeerDisconnect } from "./utils";
 import { cenexRadio } from "./cenexradio";
 import startPeerOperator from "./operator";
+
 import "./css/style.css";
 
 function startPeer() {
@@ -32,9 +34,9 @@ function startPeer() {
     console.log("enabling audio", hasCallActive);
     if (hasCallActive === false) {
       audioEl.srcObject = stream;
+      audioEl.autoplay = true;
       logMessage("Audio conectado");
-      buttonCall.classList.add("hidden");
-      buttonHang.classList.add("active");
+      switchCallButtons("call");
     } else {
       console.log("operadora ocupada...");
       //videoEl.src = "./videos/busy.mp4";
@@ -43,8 +45,32 @@ function startPeer() {
     }
   };
 
+  let switchCallButtons = (mode) => {
+    if (mode === "hang") {
+      console.log("hanging");
+      buttonCall.classList.remove("hidden");
+      buttonHang.classList.remove("active");
+    } else {
+      buttonCall.classList.add("hidden");
+      buttonHang.classList.add("active");
+    }
+  };
+
   // Register with the peer server
-  let peer = new Peer(callerID);
+  let peer = new Peer({
+    config: {
+      iceServers: [
+        {
+          url: "stun:numb.viagenie.ca",
+        },
+        {
+          url: "turn:numb.viagenie.ca",
+          username: "pabloselin@gmail.com",
+          credential: "kL01ZWqK",
+        },
+      ],
+    },
+  });
 
   peer.on("open", (id) => {
     logMessage("Mi ID de llamada es: " + id);
@@ -63,6 +89,19 @@ function startPeer() {
     conn.on("open", () => {
       conn.send("Conexión abierta");
     });
+
+    conn.on("close", () => {
+      console.log("closing all stuff");
+      handlePeerDisconnect(peer);
+    });
+  });
+
+  peer.on("disconnected", (conn) => {
+    console.log(conn);
+    switchCallButtons("hang");
+    //peer.close();
+    handlePeerDisconnect(peer);
+    audioEl.setAttribute("src", null);
   });
 
   // Handle incoming voice/video connection
@@ -112,8 +151,9 @@ function startPeer() {
   };
 
   let disconnectPeer = () => {
-    peer.destroy();
-    logMessage("Llamada colgada");
+    peer.disconnect();
+    console.log("Disconnecting");
+    logMessage("Llamada terminada");
   };
 
   window.disconnectPeer = disconnectPeer;
