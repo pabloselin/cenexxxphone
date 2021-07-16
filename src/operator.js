@@ -8,6 +8,7 @@ function startPeerOperator() {
   let messagesEl = document.querySelector(".messages");
   let audioEl = document.querySelector(".remote-audio");
   let hasCallActive = false;
+  let buttonHang = document.querySelector("#botoncortar");
 
   let logMessage = (message) => {
     let newMessage = document.createElement("div");
@@ -22,7 +23,8 @@ function startPeerOperator() {
   // Register with the peer server
   let operatorPeer = new Peer(operatorID);
   operatorPeer.on("open", (id) => {
-    logMessage("My operatorPeer ID is: " + id);
+    logMessage("ID de operadora activado:" + id);
+    logMessage("Esperando llamada");
   });
   operatorPeer.on("error", (error) => {
     console.error(error);
@@ -30,12 +32,13 @@ function startPeerOperator() {
 
   // Handle incoming data connection
   operatorPeer.on("connection", (conn) => {
-    logMessage("incoming peer connection!");
+    logMessage("Conexión entrante");
     conn.on("data", (data) => {
       logMessage(`received: ${data}`);
     });
     conn.on("open", () => {
       conn.send(hasCallActive);
+      logMessage("Llamada activa");
     });
   });
 
@@ -47,6 +50,8 @@ function startPeerOperator() {
       .then((stream) => {
         call.answer(stream); // Answer the call with an A/V stream.
         call.on("stream", renderAudio);
+        logMessage("Audio conectado");
+        buttonHang.classList.add("active");
       })
       .catch((err) => {
         console.error("Failed to get local stream", err);
@@ -55,7 +60,7 @@ function startPeerOperator() {
 
   // Initiate outgoing connection
   let connectToPeer = () => {
-    logMessage(`Connecting to ${operatorID}...`);
+    logMessage(`Contactando a ${operatorID}...`);
 
     let conn = operatorPeer.connect(operatorID);
     conn.on("data", (data) => {
@@ -70,13 +75,20 @@ function startPeerOperator() {
       .then((stream) => {
         let call = operatorPeer.call(operatorID, stream);
         call.on("stream", renderAudio);
+        logMessage("Audio conectado");
       })
       .catch((err) => {
-        logMessage("Failed to get local stream", err);
+        logMessage("No se ha podido conectar el audio", err);
       });
   };
 
+  let disconnectPeer = () => {
+    peer.destroy();
+    logMessage("Llamada colgada");
+  };
+
   window.connectToPeer = connectToPeer;
+  window.disconnectPeer = disconnectPeer;
 }
 
 export default startPeerOperator;

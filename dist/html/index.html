@@ -28,24 +28,29 @@
         <img src="./images/logocenex_web.png" alt="CENEX">
       </header>
       
-      <p>
+
+
+      <div class="audiozone">
         <audio id="remote-audio" class="remote-audio" autoplay></audio>
-      </p>
-      <button onclick="connectToPeer()">
-        Llamar
-      </button>
-      <button onclick="connectToPeer()">
-        Cortar
-      </button>
-      <video id="callvideo" src="./videos/callme.mp4" autoplay onclick="connectToPeer();"></video>
+      </div>
+
+
+      <div class="callzone">
+        <img class="botonui" id="botonllamar" src="./images/call.png" onclick="connectToPeer()">
+        <img class="botonui" id="botoncortar" src="./images/endcall.png" onclick="disconnectPeer()">
+      </div>
+
+      
       
       <div class="messages">
         
       </div>
       
-      
-      <button id="escuchar">Escuchar</button>
-      <button id="stop">Parar</button>
+      <div class="radiozone">
+        <h1>RADIO</h1>
+        <button id="escuchar">Escuchar</button>
+        <button id="stop">Parar</button>
+      </div>
       <!-- <audio id="radio" class="radio" src="http://134.209.89.225:8000/stream.ogg" controls autoplay></audio> -->
     </div> 
   </body>

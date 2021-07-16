@@ -1,22 +1,87 @@
-.caller,
-.operadora
-{
+body {
+    background-color: #6c99a3;
+    font-family: sans-serif;
+}
+
+.messages {
+    background-color: white;
+    text-align: left;
     padding: 12px;
-    background-color: #f0f0f0;
+    max-width: 600px;
+    margin: 24px auto;
+}
+
+.messages > div {
+    margin: 6px 0;
+}
+
+.messages > div:before {
+    content: ">>> ";
+    font-weight: bold;
+}
+
+.caller,
+.operadora {
+    padding: 12px;
     margin: 12px;
 }
 
- button {
-     padding: 6px;
-     font-size: 12px;
-     margin: 12px 0;
- }
+#callvideo {
+    max-width: 260px;
+    height: auto;
+}
 
- #callvideo {
-     max-width: 100%;
-     height: auto;
- }
+button {
+    padding: 6px;
+    font-size: 12px;
+    margin: 12px 0;
+}
 
- #cenexheader {
-     text-align: center;
- }
+#cenexheader {
+    text-align: center;
+}
+
+.callzone {
+    display: flex;
+    justify-content: center;
+}
+
+#botoncortar {
+    display: none;
+}
+
+#botoncortar.active {
+    display: block;
+}
+
+#botonllamar.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .callzone {
+        max-width: 100%;
+    }
+}
+
+.botonui {
+    display: block;
+    cursor: pointer;
+    transition: all ease-in 0.1s;
+    max-width: 100%;
+    height: auto;
+}
+
+.botonui:hover {
+    transform: scale(1.2);
+}
+
+.radiozone {
+    text-align: center;
+}
+
+.operadora {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}

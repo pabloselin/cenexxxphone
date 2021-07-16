@@ -17,10 +17,18 @@
     </script>
   </head>
   <body>
+    <header id="cenexheader">
+        <img src="./images/logocenex_web.png" alt="CENEX">
+      </header>
     <div class="operadora">  
         <h1>Operadora CENEX</h1>
+        
         <audio class="remote-audio" autoplay></audio>
-        Esperando llamada ...  
+       
+        <div class="callzone">
+          <img class="botonui" id="botoncortar" src="./images/endcall.png" onclick="disconnectPeer()">
+        </div>
+
         <div class="messages">
         
         </div>
