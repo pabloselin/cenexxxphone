@@ -32,6 +32,7 @@ passport.use(
 );
 
 const app = express();
+//const server = app.listen(9000);
 
 // make all the files in 'public' available
 // https://expressjs.com/en/starter/static-files.html
@@ -69,11 +70,5 @@ app.get("/operadora", (request, response) => {
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
-
-// peerjs server
-const peerServer = ExpressPeerServer(listener, {
-  debug: true,
-  path: "/myapp",
-});
-
-app.use("/peerjs", peerServer);
+//app.use("/expresspeerserver", peerServer);
+//app.listen(9000);

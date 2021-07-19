@@ -85,3 +85,11 @@ button {
     max-width: 600px;
     margin: 0 auto;
 }
+
+.audiozone {
+    text-align: center;
+}
+
+.audiozone audio {
+    margin: 12px auto;
+}

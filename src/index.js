@@ -1,9 +1,16 @@
 import Peer from "peerjs";
 import animate from "animate.css";
 
-import { guid, handlePeerDisconnect } from "./utils";
+import {
+  guid,
+  handlePeerDisconnect,
+  logMessage,
+  renderAudio,
+  switchCallButtons,
+} from "./utils";
 import { cenexRadio } from "./cenexradio";
 import startPeerOperator from "./operator";
+import peerServerConfig from "./peerServerConfig";
 
 import "./css/style.css";
 
@@ -14,67 +21,19 @@ function startPeer() {
 
   //let Peer = window.Peer;
   let operatorID = "cenexxx_operator";
-  let messagesEl = document.querySelector(".messages");
+
   let audioEl = document.querySelector(".remote-audio");
   let videoEl = document.querySelector("#callvideo");
   let hasCallActive = false;
-  let buttonCall = document.querySelector("#botonllamar");
-  let buttonHang = document.querySelector("#botoncortar");
 
   let callerID = guid();
 
-  let logMessage = (message) => {
-    let newMessage = document.createElement("div");
-    newMessage.classList.add = "message";
-    newMessage.innerText = message;
-    messagesEl.appendChild(newMessage);
-  };
-
-  let renderAudio = (stream) => {
-    console.log("enabling audio", hasCallActive);
-    if (hasCallActive === false) {
-      audioEl.srcObject = stream;
-      audioEl.autoplay = true;
-      logMessage("Audio conectado");
-      switchCallButtons("call");
-    } else {
-      console.log("operadora ocupada...");
-      //videoEl.src = "./videos/busy.mp4";
-      audioEl.pause();
-      audioEl.removeAttribute("src");
-    }
-  };
-
-  let switchCallButtons = (mode) => {
-    if (mode === "hang") {
-      console.log("hanging");
-      buttonCall.classList.remove("hidden");
-      buttonHang.classList.remove("active");
-    } else {
-      buttonCall.classList.add("hidden");
-      buttonHang.classList.add("active");
-    }
+  let preRenderAudio = (stream) => {
+    renderAudio(stream, hasCallActive, audioEl);
   };
 
   // Register with the peer server
-  let peer = new Peer({
-    host: "radio.cenexxx.cl",
-    path: "/cenexxxpeerserver",
-    port: 9000,
-    key: "cenexxx",
-    config: {
-      iceServers: [
-        {
-          url: "stun:numb.viagenie.ca",
-        },
-        {
-          url: "turn:numb.viagenie.ca",
-          username: "pabloselin@gmail.com",
-          credential: "kL01ZWqK",
-        },
-      ],
-    },
-  });
+  let peer = new Peer(peerServerConfig);
 
   peer.on("open", (id) => {
     logMessage("Mi ID de llamada es: " + id);
@@ -146,7 +105,7 @@ function startPeer() {
       .getUserMedia({ video: false, audio: true })
       .then((stream) => {
         let call = peer.call(operatorID, stream);
-        call.on("stream", renderAudio);
+        call.on("stream", preRenderAudio);
         logMessage("Llamada en proceso...");
       })
       .catch((err) => {

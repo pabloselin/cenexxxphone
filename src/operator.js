@@ -1,5 +1,13 @@
 import Peer from "peerjs";
-import { guid, handlePeerDisconnect } from "./utils";
+import {
+  guid,
+  handlePeerDisconnect,
+  logMessage,
+  renderAudioOperator,
+  switchCallButtons,
+} from "./utils";
+import peerServerConfig from "./peerServerConfig";
+
 // client-side js, loaded by index.html
 // run by the browser each time the page is loaded
 
@@ -11,41 +19,20 @@ function startPeerOperator() {
   let hasCallActive = false;
   let buttonHang = document.querySelector("#botoncortar");
 
-  let logMessage = (message) => {
-    let newMessage = document.createElement("div");
-    newMessage.innerText = message;
-    messagesEl.appendChild(newMessage);
-  };
-
-  let renderAudio = (stream) => {
-    audioEl.srcObject = stream;
-  };
-
   // Register with the peer server
-  let operatorPeer = new Peer(operatorID, {
-    host: "radio.cenexxx.cl",
-    path: "/cenexxxpeerserver",
-    port: 9000,
-    key: "cenexxx",
-    config: {
-      iceServers: [
-        {
-          url: "stun:numb.viagenie.ca",
-        },
-        {
-          url: "turn:numb.viagenie.ca",
-          username: "pabloselin@gmail.com",
-          credential: "kL01ZWqK",
-        },
-      ],
-    },
-  });
+  let operatorPeer = new Peer(operatorID, peerServerConfig);
+
+  let preRenderAudio = (stream) => {
+    renderAudioOperator(stream, hasCallActive, audioEl);
+  };
+
   operatorPeer.on("open", (id) => {
     logMessage("ID de operadora activado:" + id);
     logMessage("Esperando llamada");
   });
   operatorPeer.on("error", (error) => {
-    console.error(error);
+    console.error("Error operadora", error);
+    logMessage("Error en abrir la conexión");
   });
 
   // Handle incoming data connection
@@ -67,8 +54,8 @@ function startPeerOperator() {
       .getUserMedia({ video: false, audio: true })
       .then((stream) => {
         call.answer(stream); // Answer the call with an A/V stream.
-        call.on("stream", renderAudio);
-        logMessage("Audio conectado");
+        logMessage("Llamada establecida");
+        call.on("stream", preRenderAudio);
         buttonHang.classList.add("active");
       })
       .catch((err) => {
