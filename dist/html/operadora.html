@@ -24,8 +24,10 @@
         <h1>Operadora CENEX</h1>
         
         <audio id="remote-audio" class="remote-audio" autoplay controls></audio>
-       
+        <audio src="./sounds/phonering.ogg" id="ringing" loop></audio>
+
         <div class="callzone">
+          <img class="botonui animate__animated animate__shakeX animate__infinite" id="botoncontestar" src="./images/answer.png" alt="" onClick="answerCall()">
           <img class="botonui animate__animated animate__zoomIn" id="botoncortar" src="./images/endcall.png" onclick="disconnectPeer()">
         </div>
 

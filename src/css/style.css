@@ -58,6 +58,15 @@ button {
     display: none;
 }
 
+#botoncontestar {
+    display: none;
+    max-width: 160px;
+}
+
+#botoncontestar.active {
+    display: block;
+}
+
 @media screen and (max-width: 768px) {
     .callzone {
         max-width: 100%;

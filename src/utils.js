@@ -56,7 +56,6 @@ let renderAudio = (stream, hasCallActive, audioEl) => {
     if (hasCallActive === false) {
         audioEl.autoplay = true;
         audioEl.srcObject = stream;
-        audioEl.play();
         logMessage("Audio conectado");
         switchCallButtons("call");
     } else {
