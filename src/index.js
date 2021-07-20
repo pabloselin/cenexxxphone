@@ -1,5 +1,6 @@
 import Peer from "peerjs";
 import animate from "animate.css";
+import adapter from "webrtc-adapter";
 
 import {
   guid,

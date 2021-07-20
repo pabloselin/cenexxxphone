@@ -1,4 +1,6 @@
 import Peer from "peerjs";
+import adapter from "webrtc-adapter";
+
 import {
   guid,
   handlePeerDisconnect,

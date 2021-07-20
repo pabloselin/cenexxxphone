@@ -7,12 +7,12 @@ const peerServerConfig = {
   config: {
     iceServers: [
       {
-        url: "stun:numb.viagenie.ca",
+        url: "stun:stun.cenexxx.cl",
       },
       {
-        url: "turn:numb.viagenie.ca",
-        username: "pabloselin@gmail.com",
-        credential: "kL01ZWqK",
+        url: "turn:turn.cenexxx.cl",
+        username: "cenexxx",
+        credential: "cenexxx2120",
       },
     ],
   },
