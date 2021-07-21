@@ -23,6 +23,20 @@ const guid = () => {
 
 let handlePeerDisconnect = (peer) => {
     // manually close the peer connections
+    console.log("destroy");
+    console.log(window.localStream);
+    if (window.localStream) {
+        window.localStream.getTracks().forEach((track) => {
+            track.stop();
+        });
+    }
+    busyTone();
+    navigator.mediaDevices
+        .getUserMedia({ video: false, audio: true })
+        .then((stream) => {
+            console.log(stream);
+        });
+
     for (let conns in peer.connections) {
         peer.connections[conns].forEach((conn, index, array) => {
             console.log(
@@ -37,6 +51,7 @@ let handlePeerDisconnect = (peer) => {
             if (conn.close) conn.close();
         });
     }
+    location.reload();
 };
 
 let logMessage = (message) => {
@@ -44,6 +59,24 @@ let logMessage = (message) => {
     let newMessage = document.createElement("div");
     newMessage.innerText = message;
     messagesEl.appendChild(newMessage);
+};
+
+let waitingTone = () => {
+    console.log("change waitingtone");
+    let audioEl = document.querySelector(".remote-audio");
+    let busysrc = audioEl.getAttribute("data-waitsound-ogg");
+    audioEl.src = busysrc;
+    audioEl.play();
+    audioEl.loop = true;
+};
+
+let busyTone = () => {
+    console.log("change busytone");
+    let audioEl = document.querySelector(".remote-audio");
+    let waitingsrc = audioEl.getAttribute("data-busysound-ogg");
+    audioEl.src = waitingsrc;
+    audioEl.play();
+    audioEl.loop = true;
 };
 
 // let renderAudio = (stream) => {
@@ -112,4 +145,6 @@ export {
     renderAudio,
     renderAudioOperator,
     switchCallButtons,
+    busyTone,
+    waitingTone,
 };

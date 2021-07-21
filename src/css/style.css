@@ -40,15 +40,22 @@ button {
 #escuchar {
     max-width: 220px;
     height: auto;
+    cursor: pointer;
 }
 
 #cenexheader {
     text-align: center;
 }
 
+#cenexheader img {
+    max-width: 250px;
+    height: auto;
+}
+
 .callzone {
     display: flex;
     justify-content: center;
+    margin: 72px auto;
 }
 
 .callzone img {

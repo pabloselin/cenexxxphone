@@ -8,6 +8,8 @@ import {
   logMessage,
   renderAudio,
   switchCallButtons,
+  busyTone,
+  waitingTone,
 } from "./utils";
 import { cenexRadio } from "./cenexradio";
 import startPeerOperator from "./operator";
@@ -31,10 +33,38 @@ function startPeer() {
 
   let preRenderAudio = (stream) => {
     renderAudio(stream, hasCallActive, audioEl);
+    //Localize stream
+    window.localStream = stream;
   };
 
   // Register with the peer server
   let peer = new Peer(peerServerConfig);
+
+  if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia(
+      {
+        audio: true,
+        video: false,
+      },
+      (stream) => {
+        // Handle incoming voice/video connection
+        peer.on("call", (call) => {
+          console.log("callactive", hasCallActive);
+          waitingTone();
+          navigator.mediaDevices
+            .getUserMedia({ video: false, audio: true })
+            .then((stream) => {
+              call.answer(stream); // Answer the call with an A/V stream.
+              call.on("stream", renderAudio);
+              logMessage("Llamada en proceso...");
+            })
+            .catch((err) => {
+              console.error("Failed to get local stream", err);
+            });
+        });
+      }
+    );
+  }
 
   peer.on("open", (id) => {
     logMessage("Mi ID de llamada es: " + id);
@@ -49,7 +79,12 @@ function startPeer() {
   peer.on("connection", (conn) => {
     logMessage("Conexión entrante");
     conn.on("data", (data) => {
-      logMessage(`Data recibida: ${data}`);
+      if (data === true) {
+        logMessage(`Data recibida: ${data}`);
+
+        peer.destroy();
+        busyTone();
+      }
     });
     conn.on("open", () => {
       conn.send("Conexión abierta");
@@ -61,45 +96,13 @@ function startPeer() {
     });
   });
 
-  peer.on("disconnected", (conn) => {
-    console.log(conn);
+  peer.on("disconnected", (id) => {
+    console.log("disconnect event", id);
     switchCallButtons("hang");
     //peer.close();
+    busyTone();
     handlePeerDisconnect(peer);
-    audioEl.setAttribute("src", null);
   });
-
-  // Handle incoming voice/video connection
-  peer.on("call", (call) => {
-    console.log("callactive", hasCallActive);
-    waitingTone();
-    navigator.mediaDevices
-      .getUserMedia({ video: false, audio: true })
-      .then((stream) => {
-        call.answer(stream); // Answer the call with an A/V stream.
-        call.on("stream", renderAudio);
-        logMessage("Llamada en proceso...");
-      })
-      .catch((err) => {
-        console.error("Failed to get local stream", err);
-      });
-  });
-
-  let waitingTone = () => {
-    console.log("change waitingtone");
-    let busysrc = audioEl.getAttribute("data-waitsound-ogg");
-    audioEl.src = busysrc;
-    audioEl.play();
-    audioEl.loop = true;
-  };
-
-  let busyTone = () => {
-    console.log("change busytone");
-    let waitingsrc = audioEl.getAttribute("data-busysound-ogg");
-    audioEl.src = waitingsrc;
-    audioEl.play();
-    audioEl.loop = true;
-  };
 
   // Initiate outgoing connection
   let connectToPeer = () => {
@@ -128,9 +131,9 @@ function startPeer() {
   };
 
   let disconnectPeer = () => {
+    console.log(peer);
     peer.disconnect();
-    console.log("Disconnecting");
-    logMessage("Llamada terminada");
+    peer.destroy();
   };
 
   window.disconnectPeer = disconnectPeer;

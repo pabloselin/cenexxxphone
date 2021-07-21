@@ -7,6 +7,8 @@ import {
   logMessage,
   renderAudioOperator,
   switchCallButtons,
+  busyTone,
+  waitingTone,
 } from "./utils";
 import peerServerConfig from "./peerServerConfig";
 
@@ -36,6 +38,7 @@ function startPeerOperator() {
 
   let preRenderAudio = (stream) => {
     answerCall(stream);
+    window.localStream = stream;
   };
 
   operatorPeer.on("open", (id) => {
@@ -50,7 +53,7 @@ function startPeerOperator() {
 
   // Handle incoming data connection
   operatorPeer.on("connection", (conn) => {
-    logMessage("Conexión entrante");
+    logMessage("Conexión entrante, hay llamada? " + hasCallActive);
     conn.on("data", (data) => {
       logMessage(`received: ${data}`);
     });
@@ -60,19 +63,29 @@ function startPeerOperator() {
     });
   });
 
+  operatorPeer.on("disconnected", (id) => {
+    console.log("disconnect event", id);
+    switchCallButtons("hang");
+    //peer.close();
+    busyTone();
+    handlePeerDisconnect(operatorPeer);
+  });
+
   // Handle incoming voice/video connection
   operatorPeer.on("call", (call) => {
-    hasCallActive = true;
     navigator.mediaDevices
       .getUserMedia({ video: false, audio: true })
       .then((stream) => {
-        logMessage("Llamada establecida");
-        buttonAnswer.classList.add("active");
-        audioRing.play();
-        buttonAnswer.addEventListener("click", function () {
-          call.answer(stream); // Answer the call with an audio stream.
-          call.on("stream", preRenderAudio);
-        });
+        if (hasCallActive !== true) {
+          logMessage("Llamada establecida");
+          buttonAnswer.classList.add("active");
+          audioRing.play();
+          buttonAnswer.addEventListener("click", function () {
+            call.answer(stream); // Answer the call with an audio stream.
+            call.on("stream", preRenderAudio);
+            hasCallActive = true;
+          });
+        }
       })
       .catch((err) => {
         call.answer(new MediaStream());
@@ -108,6 +121,7 @@ function startPeerOperator() {
     operatorPeer.disconnect();
     operatorPeer.destroy();
     handlePeerDisconnect(operatorPeer);
+    hasCallActive = false;
     logMessage("Llamada colgada");
   };
 
