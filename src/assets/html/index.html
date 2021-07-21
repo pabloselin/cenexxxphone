@@ -31,12 +31,12 @@
 
 
       <div class="audiozone">
-        <audio id="remote-audio" class="remote-audio" autoplay controls></audio>
+        <audio id="remote-audio" class="remote-audio" autoplay controls data-waitsound-ogg="./sounds/phonewait.ogg" data-waitsound-mp3="./sounds/phonewait.mp3" data-busysound-ogg="./sounds/phonebusy.ogg" data-busysound-mp3="./sounds/phonebusy.mp3"></audio>
       </div>
 
 
       <div class="callzone">
-        <img class="botonui animate__animated animate__headShake animate__infinite animate__slower" id="botonllamar" src="./images/call.png" onclick="connectToPeer()">
+        <img class="botonui animate__animated animate__headShake animate__infinite animate__slower" id="botonllamar" src="./images/call_alt.png" onclick="connectToPeer()">
         <img class="botonui animate__animated animate__pulse animate__infinite" id="botoncortar" src="./images/endcall.png" onclick="disconnectPeer()">
       </div>
 
@@ -48,7 +48,7 @@
       
       <div class="radiozone">
         <h1>RADIO</h1>
-        <button id="escuchar">Escuchar</button>
+        <img id="escuchar" src="./images/listen.png">
         <button id="stop">Parar</button>
       </div>
       <!-- <audio id="radio" class="radio" src="http://134.209.89.225:8000/stream.ogg" controls autoplay></audio> -->

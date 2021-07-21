@@ -41,6 +41,7 @@ function startPeer() {
   });
   peer.on("error", (error) => {
     console.error(error);
+    busyTone();
     logMessage("Error");
   });
 
@@ -71,7 +72,7 @@ function startPeer() {
   // Handle incoming voice/video connection
   peer.on("call", (call) => {
     console.log("callactive", hasCallActive);
-
+    waitingTone();
     navigator.mediaDevices
       .getUserMedia({ video: false, audio: true })
       .then((stream) => {
@@ -84,19 +85,30 @@ function startPeer() {
       });
   });
 
+  let waitingTone = () => {
+    console.log("change waitingtone");
+    let busysrc = audioEl.getAttribute("data-waitsound-ogg");
+    audioEl.src = busysrc;
+    audioEl.play();
+    audioEl.loop = true;
+  };
+
+  let busyTone = () => {
+    console.log("change busytone");
+    let waitingsrc = audioEl.getAttribute("data-busysound-ogg");
+    audioEl.src = waitingsrc;
+    audioEl.play();
+    audioEl.loop = true;
+  };
+
   // Initiate outgoing connection
   let connectToPeer = () => {
+    waitingTone();
     logMessage(`Connecting to ${operatorID}...`);
-
     let conn = peer.connect(operatorID);
     conn.on("data", (data) => {
       logMessage(`received: ${data}`);
       console.log("data", data);
-      if (data === true) {
-        console.log("cancel call");
-        logMessage("La operadora está ocupada");
-        hasCallActive = true;
-      }
     });
     conn.on("open", () => {
       conn.send("Conexión establecida con llamador");
@@ -105,12 +117,13 @@ function startPeer() {
     navigator.mediaDevices
       .getUserMedia({ video: false, audio: true })
       .then((stream) => {
-        let call = peer.call(operatorID, stream);
+        const call = peer.call(operatorID, stream);
         call.on("stream", preRenderAudio);
         logMessage("Llamada en proceso...");
       })
       .catch((err) => {
-        logMessage("No se ha podido conectar el audio", err);
+        const call = peer.call(operatorId, new MediaStream());
+        logMessage("Cambiando stream ...", err);
       });
   };
 

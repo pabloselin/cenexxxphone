@@ -42,8 +42,9 @@ function startPeerOperator() {
     logMessage("ID de operadora activado:" + id);
     logMessage("Esperando llamada");
   });
+
   operatorPeer.on("error", (error) => {
-    console.error("Error operadora", error);
+    console.error("Error operadora?", error);
     logMessage("Error en abrir la conexión");
   });
 
@@ -74,33 +75,34 @@ function startPeerOperator() {
         });
       })
       .catch((err) => {
+        call.answer(new MediaStream());
         console.error("Failed to get local stream", err);
       });
   });
 
   // Initiate outgoing connection
-  let connectToPeer = () => {
-    logMessage(`Contactando a ${operatorID}...`);
+  // let connectToPeer = () => {
+  //   logMessage(`Contactando a ${operatorID}...`);
 
-    let conn = operatorPeer.connect(operatorID);
-    conn.on("data", (data) => {
-      logMessage(`received: ${data}`);
-    });
-    conn.on("open", () => {
-      conn.send("hi!");
-    });
+  //   let conn = operatorPeer.connect(operatorID);
+  //   conn.on("data", (data) => {
+  //     logMessage(`received: ${data}`);
+  //   });
+  //   conn.on("open", () => {
+  //     conn.send("hi!");
+  //   });
 
-    navigator.mediaDevices
-      .getUserMedia({ video: false, audio: true })
-      .then((stream) => {
-        let call = operatorPeer.call(operatorID, stream);
-        call.on("stream", preRenderAudio);
-        logMessage("Audio conectado");
-      })
-      .catch((err) => {
-        logMessage("No se ha podido conectar el audio", err);
-      });
-  };
+  //   navigator.mediaDevices
+  //     .getUserMedia({ video: false, audio: true })
+  //     .then((stream) => {
+  //       let call = operatorPeer.call(operatorID, stream);
+  //       call.on("stream", preRenderAudio);
+  //       logMessage("Audio conectado");
+  //     })
+  //     .catch((err) => {
+  //       logMessage("No se ha podido conectar el audio", err);
+  //     });
+  // };
 
   let disconnectPeer = () => {
     operatorPeer.disconnect();
@@ -109,7 +111,7 @@ function startPeerOperator() {
     logMessage("Llamada colgada");
   };
 
-  window.connectToPeer = connectToPeer;
+  //window.connectToPeer = connectToPeer;
   window.disconnectPeer = disconnectPeer;
   window.answerCall = answerCall;
 }

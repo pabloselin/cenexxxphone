@@ -1,10 +1,10 @@
 body {
-    background-color: #6c99a3;
+    background-color: white;
     font-family: sans-serif;
 }
 
 .messages {
-    background-color: white;
+    background-color: #ccc;
     text-align: left;
     padding: 12px;
     max-width: 600px;
@@ -37,6 +37,11 @@ button {
     margin: 12px 0;
 }
 
+#escuchar {
+    max-width: 220px;
+    height: auto;
+}
+
 #cenexheader {
     text-align: center;
 }
@@ -44,6 +49,11 @@ button {
 .callzone {
     display: flex;
     justify-content: center;
+}
+
+.callzone img {
+    max-width: 250px;
+    height: auto;
 }
 
 #botoncortar {
