@@ -1,4 +1,5 @@
 import { Howl, Howler } from "howler";
+import uniquid from "uniquid";
 
 function cenexRadio() {
   let radioURL = "https://radio.cenexxx.cl/stream.ogg";
@@ -9,6 +10,7 @@ function cenexRadio() {
     src: [radioURL],
     html5: true,
     format: ["ogg"],
+    preload: "metadata",
   });
 
   var buttonPlay = document.getElementById("escuchar");

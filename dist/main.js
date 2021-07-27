@@ -171,6 +171,17 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, style) {\
 
 /***/ }),
 
+/***/ "./node_modules/uniquid/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/uniquid/index.js ***!
+  \***************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function(prefix) {\n  var uid = parseInt((new Date()).valueOf() +\n    (Math.random() * 1000000).toFixed()).toString(36);\n  return (prefix || '') + uid;\n};\n\n\n//# sourceURL=webpack://hello-express/./node_modules/uniquid/index.js?");
+
+/***/ }),
+
 /***/ "./node_modules/webrtc-adapter/src/js/adapter_core.js":
 /*!************************************************************!*\
   !*** ./node_modules/webrtc-adapter/src/js/adapter_core.js ***!
@@ -299,7 +310,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"cenexRadio\": () => (/* binding */ cenexRadio)\n/* harmony export */ });\n/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! howler */ \"./node_modules/howler/dist/howler.js\");\n/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\nfunction cenexRadio() {\r\n  let radioURL = \"https://radio.cenexxx.cl/stream.ogg\";\r\n  let liveURL = \"https://radio.cenexxx.cl/live.ogg\";\r\n  let isPlaying = false;\r\n\r\n  let radio = new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\r\n    src: [radioURL],\r\n    html5: true,\r\n    format: [\"ogg\"],\r\n  });\r\n\r\n  var buttonPlay = document.getElementById(\"escuchar\");\r\n  //var buttonStop = document.getElementById(\"stop\");\r\n\r\n  buttonPlay.addEventListener(\"click\", function () {\r\n    if (isPlaying !== true) {\r\n      console.log(\"play\");\r\n      isPlaying = true;\r\n      console.log(radio);\r\n      radio.play();\r\n\r\n      buttonPlay.classList.add(\"animate__heartBeat\");\r\n    } else {\r\n      radio.pause();\r\n      isPlaying = false;\r\n      buttonPlay.classList.remove(\"animate__heartBeat\");\r\n    }\r\n  });\r\n\r\n  // buttonStop.addEventListener(\"click\", function () {\r\n  //   console.log(\"stop\");\r\n  //   isPlaying = false;\r\n  //   radio.stop();\r\n  // });\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack://hello-express/./src/cenexradio.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"cenexRadio\": () => (/* binding */ cenexRadio)\n/* harmony export */ });\n/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! howler */ \"./node_modules/howler/dist/howler.js\");\n/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var uniquid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! uniquid */ \"./node_modules/uniquid/index.js\");\n/* harmony import */ var uniquid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(uniquid__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\r\nfunction cenexRadio() {\r\n  let radioURL = \"https://radio.cenexxx.cl/stream.ogg\";\r\n  let liveURL = \"https://radio.cenexxx.cl/live.ogg\";\r\n  let isPlaying = false;\r\n\r\n  let radio = new howler__WEBPACK_IMPORTED_MODULE_0__.Howl({\r\n    src: [radioURL],\r\n    html5: true,\r\n    format: [\"ogg\"],\r\n    preload: \"metadata\",\r\n  });\r\n\r\n  var buttonPlay = document.getElementById(\"escuchar\");\r\n  //var buttonStop = document.getElementById(\"stop\");\r\n\r\n  buttonPlay.addEventListener(\"click\", function () {\r\n    if (isPlaying !== true) {\r\n      console.log(\"play\");\r\n      isPlaying = true;\r\n      console.log(radio);\r\n      radio.play();\r\n\r\n      buttonPlay.classList.add(\"animate__heartBeat\");\r\n    } else {\r\n      radio.pause();\r\n      isPlaying = false;\r\n      buttonPlay.classList.remove(\"animate__heartBeat\");\r\n    }\r\n  });\r\n\r\n  // buttonStop.addEventListener(\"click\", function () {\r\n  //   console.log(\"stop\");\r\n  //   isPlaying = false;\r\n  //   radio.stop();\r\n  // });\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack://hello-express/./src/cenexradio.js?");
 
 /***/ }),
 
