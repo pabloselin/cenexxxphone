@@ -10,7 +10,7 @@ function cenexRadio() {
     src: [radioURL],
     html5: true,
     format: ["ogg"],
-    preload: "metadata",
+    preload: false,
   });
 
   var buttonPlay = document.getElementById("escuchar");
