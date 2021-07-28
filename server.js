@@ -63,7 +63,7 @@ function authOperator(req, res, next) {
     if (
       !credentials ||
       credentials.name !== "cenexxx" ||
-      credentials.name !== "cenexxx2120"
+      credentials.pass !== "cenexxx2120"
     ) {
       console.log("auth", credentials);
       res.status(401);
