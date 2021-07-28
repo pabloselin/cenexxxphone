@@ -4,70 +4,89 @@
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
+const auth = require("basic-auth");
 
-var passport = require("passport"),
-  LocalStrategy = require("passport-local").Strategy;
+const admin = { name: "cenexxx", password: "cenexxx2120" };
 
 var session = require("express-session"),
   bodyParser = require("body-parser");
 
 const { ExpressPeerServer } = require("peer");
 
-passport.use(
-  new LocalStrategy(function (username, password, done) {
-    username.findOne({ username: username }, function (err, user) {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false, { message: "Usuario incorrecto." });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: "Password incorrecto." });
-      }
-
-      return done(null, user);
-    });
-  })
-);
-
 const app = express();
 //const server = app.listen(9000);
 
 // make all the files in 'public' available
 // https://expressjs.com/en/starter/static-files.html
+
 app.use(express.static("dist"));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: "cenexxxx" }));
-app.use(passport.initialize());
+
 //app.use(passport.session());
+
+// app.all("*", checkSecure);
+
+// function checkSecure(req, res, next) {
+//   const routes = ["/operadora"];
+//   if (routes.includes(req.path)) {
+//     next();
+//   } else {
+//     next();
+//   }
+// }
 
 // https://expressjs.com/en/starter/basic-routing.html
 
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/operadora",
-    failureRedirect: "/login",
-  })
-);
+// app.use(function (req, res, next) {
+//   var credentials = auth(req);
+//   if (req.url === "/operadora") {
+//     if (
+//       !credentials ||
+//       credentials.name !== "cenex" ||
+//       credentials.pass !== "cenex"
+//     ) {
+//       res.status(401);
+//       res.header("WWW-Authenticate", 'Basic realm="example"');
+//       res.send("Acceso rechazado");
+//     } else {
+//       next();
+//     }
+//   } else if (req.url === "/") {
+//     console.log("Base URL request");
+//   }
+// });
+
+function authOperator(req, res, next) {
+  if (req.path === "/operadora") {
+    console.log(req.path);
+    var credentials = auth(req);
+    if (
+      !credentials ||
+      credentials.name !== "cenexxx" ||
+      credentials.name !== "cenexxx2120"
+    ) {
+      console.log("auth", credentials);
+      res.status(401);
+      res.header("WWW-Authenticate", 'Basic realm="example"');
+      res.send("Acceso rechazado");
+    } else {
+      next();
+    }
+  } else {
+    console.log(req.path);
+    if (req.path === "/") {
+      return next();
+    }
+    //return next();
+  }
+}
+
+app.all("*", authOperator);
 
 app.get("/", (request, response) => {
   response.locals.url = request.originalUrl;
   response.sendFile(__dirname + "/dist/html/index.html");
 });
-
-app.get("/login", (request, response) => {
-  response.sendFile(__dirname + "/dist/html/login.html");
-});
-
-app.post(
-  "/operadora",
-  passport.authenticate("local", { failureRedirect: "/" }),
-  (req, res) => {
-    res.redirect("/operadora");
-  }
-);
 
 app.get("/operadora", (request, response) => {
   response.locals.url = request.originalUrl;
