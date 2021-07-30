@@ -27,6 +27,7 @@ function startPeerOperator() {
 
   // Register with the peer server
   let operatorPeer = new Peer(operatorID, peerServerConfig);
+  audioRing.volume = 0.2;
 
   let answerCall = (stream) => {
     console.log("answer call");
