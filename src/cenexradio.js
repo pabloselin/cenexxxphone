@@ -4,7 +4,7 @@ import uniquid from "uniquid";
 function cenexRadio() {
   let radioURL = "https://radio.cenexxx.cl/stream.ogg";
   let liveURL = "https://radio.cenexxx.cl/live.ogg";
-  let statusUrl = "http://radio.cenexxx.cl/status-json.xsl";
+  let statusUrl = "https://radio.cenexxx.cl/status-json.xsl";
   let isPlaying = false;
   let busyZone = document.querySelector(".busyzone");
   let callZone = document.querySelector(".callzone");
