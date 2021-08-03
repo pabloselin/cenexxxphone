@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+    background-color: #333;
     font-family: sans-serif;
 }
 
@@ -137,4 +137,28 @@ button {
 .busyzone video {
     max-width: 100%;
     height: auto;
+}
+
+#videobg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    #videobg {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    #videobg {
+        width: auto;
+        height: 100%;
+    }
 }

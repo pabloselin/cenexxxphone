@@ -8,6 +8,8 @@ function cenexRadio() {
   let isPlaying = false;
   let busyZone = document.querySelector(".busyzone");
   let callZone = document.querySelector(".callzone");
+  let videoBg = document.querySelector("#videobg");
+
   let serverStatus;
 
   let radio = new Howl({
@@ -38,9 +40,11 @@ function cenexRadio() {
     if (isLive === true) {
       busyZone.classList.add("active");
       callZone.classList.add("hidden");
+      videoBg.setAttribute("src", videoBg.getAttribute("data-altsrc"));
     } else {
       busyZone.classList.remove("active");
       callZone.classList.remove("hidden");
+      videoBg.setAttribute("src", videoBg.getAttribute("data-origsrc"));
     }
   };
 
