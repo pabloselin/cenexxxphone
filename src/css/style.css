@@ -58,6 +58,10 @@ button {
     margin: 72px auto;
 }
 
+.callzone.hidden {
+    display: none;
+}
+
 .callzone img {
     max-width: 250px;
     height: auto;
@@ -118,4 +122,19 @@ button {
 
 .audiozone audio {
     margin: 12px auto;
+}
+
+.busyzone {
+    max-width: 600px;
+    margin: 12px auto;
+    display: none;
+}
+
+.busyzone.active {
+    display: block;
+}
+
+.busyzone video {
+    max-width: 100%;
+    height: auto;
 }

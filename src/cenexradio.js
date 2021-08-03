@@ -4,7 +4,11 @@ import uniquid from "uniquid";
 function cenexRadio() {
   let radioURL = "https://radio.cenexxx.cl/stream.ogg";
   let liveURL = "https://radio.cenexxx.cl/live.ogg";
+  let statusUrl = "http://radio.cenexxx.cl/status-json.xsl";
   let isPlaying = false;
+  let busyZone = document.querySelector(".busyzone");
+  let callZone = document.querySelector(".callzone");
+  let serverStatus;
 
   let radio = new Howl({
     src: [radioURL],
@@ -14,6 +18,36 @@ function cenexRadio() {
 
   var buttonPlay = document.getElementById("escuchar");
   //var buttonStop = document.getElementById("stop");
+
+  let checkStatus = () => {
+    let status = fetch(statusUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.icestats.source);
+        let serverSources = data.icestats.source;
+        console.log(serverSources.length);
+        if (serverSources.length > 1) {
+          triggerLive(true);
+        } else {
+          triggerLive(false);
+        }
+      });
+  };
+
+  let triggerLive = (isLive) => {
+    if (isLive === true) {
+      busyZone.classList.add("active");
+      callZone.classList.add("hidden");
+    } else {
+      busyZone.classList.remove("active");
+      callZone.classList.remove("hidden");
+    }
+  };
+
+  //checkStatus
+  checkStatus();
+
+  window.setInterval(checkStatus, 10000);
 
   buttonPlay.addEventListener("click", function () {
     if (isPlaying !== true) {
