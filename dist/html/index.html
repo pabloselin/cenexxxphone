@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <video id="videobg" src="./videos/callme.mp4" data-altsrc="./videos/busy.mp4" data-origsrc="./videos/callme.mp4" autoplay muted loop></video>
+    
 
     <div id="radio">
       <!-- howler radio with icecast remote-->
@@ -27,17 +27,22 @@
       <header id="cenexheader">
         <img src="./images/logocenex_web_alt.png" alt="CENEX">
       </header>
-      
-
-      <div class="busyzone">
-        <video src="./videos/busy.mp4" autoplay="true" muted loop></video>
-      </div>
      
-
+      <video id="videobg" src="./videos/callme.mp4" data-altsrc="./videos/busy.mp4" data-origsrc="./videos/callme.mp4" autoplay muted loop></video>
 
       <div class="callzone">
+        
+        <div class="busyzone">
+          <video src="./videos/callme.mp4" autoplay="true" muted loop data-altsrc="./videos/busy.mp4" data-origsrc="./videos/callme.mp4"></video>
+        </div>
+
         <img class="botonui animate__animated animate__headShake animate__infinite animate__slower" id="botonllamar" src="./images/call_alt.png" onclick="connectToPeer()">
         <img class="botonui animate__animated animate__pulse animate__infinite" id="botoncortar" src="./images/endcall.png" onclick="disconnectPeer()">
+      
+      </div>
+
+      <div class="instructionszone">
+        <img src="./images/instructive.jpg" alt="Instructivo Cenex" class="instructive" longdesc="Connect with me better by following these tips: - Use headphones so I can hear you better and closer. - If the page does not connect refresh your browser. - If the call is cut off, call back. I want to keep listening to you">
       </div>
 
 

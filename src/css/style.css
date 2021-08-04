@@ -1,5 +1,5 @@
 body {
-    background-color: #333;
+    background-color: white;
     font-family: sans-serif;
 }
 
@@ -55,6 +55,7 @@ button {
 .callzone {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 72px auto;
 }
 
@@ -126,8 +127,8 @@ button {
 
 .busyzone {
     max-width: 600px;
-    margin: 12px auto;
-    display: none;
+    margin: 24px;
+    display: block;
 }
 
 .busyzone.active {
@@ -146,7 +147,20 @@ button {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.5;
+    opacity: 0.25;
+    /*max-width: 600px;
+    margin: 12px auto;*/
+}
+
+.instructionszone {
+    max-width: 900px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.instructionszone img {
+    width: 100%;
+    height: auto;
 }
 
 @media (min-aspect-ratio: 16/9) {

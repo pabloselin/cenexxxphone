@@ -40,11 +40,11 @@ function cenexRadio() {
     if (isLive === true) {
       busyZone.classList.add("active");
       callZone.classList.add("hidden");
-      videoBg.setAttribute("src", videoBg.getAttribute("data-altsrc"));
+      busyZone.setAttribute("src", videoBg.getAttribute("data-altsrc"));
     } else {
       busyZone.classList.remove("active");
       callZone.classList.remove("hidden");
-      videoBg.setAttribute("src", videoBg.getAttribute("data-origsrc"));
+      busyZone.setAttribute("src", videoBg.getAttribute("data-origsrc"));
     }
   };
 
