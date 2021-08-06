@@ -8,12 +8,25 @@ module.exports = {
         filename: "main.js",
         path: path.resolve(__dirname, "dist"),
         clean: true,
+        publicPath: "",
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"],
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[ext]",
+                            outputPath: "fonts/",
+                        },
+                    },
+                ],
             },
         ],
     },
@@ -24,6 +37,7 @@ module.exports = {
                 { from: "src/assets/images", to: "images" },
                 { from: "src/assets/videos", to: "videos" },
                 { from: "src/assets/sounds", to: "sounds" },
+                { from: "src/assets/fonts", to: "fonts" },
             ],
         }),
     ],

@@ -67,7 +67,7 @@ function authOperator(req, res, next) {
     ) {
       console.log("auth", credentials);
       res.status(401);
-      res.header("WWW-Authenticate", 'Basic realm="example"');
+      res.header("WWW-Authenticate", 'Basic realm="Cenex"');
       res.send("Acceso rechazado");
     } else {
       next();

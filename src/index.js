@@ -16,6 +16,7 @@ import startPeerOperator from "./operator";
 import peerServerConfig from "./peerServerConfig";
 
 import "./css/style.css";
+import "./assets/fonts/stylesheet.css";
 
 function startPeer() {
   // client-side js, loaded by index.html

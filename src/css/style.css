@@ -1,6 +1,6 @@
 body {
-    background-color: white;
-    font-family: sans-serif;
+    background-color: #555;
+    font-family: "loveloblack", sans-serif;
 }
 
 .messages {
@@ -56,7 +56,14 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 72px auto;
+    margin: 0 auto;
+    padding: 72px 0;
+    background-image: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.94) 0,
+        rgba(255, 255, 255, 0.6) 10%,
+        rgba(255, 255, 255, 0) 20%
+    );
 }
 
 .callzone.hidden {
@@ -128,7 +135,7 @@ button {
 .busyzone {
     max-width: 600px;
     margin: 24px;
-    display: block;
+    display: none;
 }
 
 .busyzone.active {
@@ -147,7 +154,7 @@ button {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.25;
+    opacity: 0.35;
     /*max-width: 600px;
     margin: 12px auto;*/
 }
@@ -156,11 +163,47 @@ button {
     max-width: 900px;
     height: auto;
     margin: 0 auto;
+    text-align: center;
+    font-size: 36px;
+    background-color: #1b08e3;
+    color: white;
+    background-image: radial-gradient(#1b08e3, #f0470c);
+    padding: 24px;
+    text-shadow: 4px 4px 1px #333;
+}
+
+.instructionszone ul li {
+    list-style: none;
 }
 
 .instructionszone img {
     width: 100%;
     height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .instructionszone {
+        font-size: 24px;
+        margin: 0 -36px;
+    }
+
+    .instructionszone ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .instructionzone ul li {
+        padding: 0;
+        margin: 0;
+    }
+
+    #cenexheader img {
+        max-width: 150px;
+    }
+
+    .callzone {
+        margin: 12px auto;
+    }
 }
 
 @media (min-aspect-ratio: 16/9) {
