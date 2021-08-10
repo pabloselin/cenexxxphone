@@ -71,7 +71,6 @@ const waitingTone = () => {
         html5: true,
         format: ["ogg"],
         loop: true,
-        preload: true,
     });
     tone.play();
 };
