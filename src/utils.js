@@ -1,3 +1,5 @@
+import { Howl, Howler } from "howler";
+
 const guid = () => {
     let s4 = () => {
         return Math.floor((1 + Math.random()) * 0x10000)
@@ -63,20 +65,32 @@ let logMessage = (message) => {
 
 let waitingTone = () => {
     console.log("change waitingtone");
-    let audioEl = document.querySelector(".remote-audio");
-    let busysrc = audioEl.getAttribute("data-waitsound-ogg");
-    audioEl.src = busysrc;
-    audioEl.play();
-    audioEl.loop = true;
+    //let audioEl = document.querySelector(".remote-audio");
+    //let busysrc = audioEl.getAttribute("data-waitsound-ogg");
+    let tone = new Howl({
+        src: ["./sounds/phonewait.ogg"],
+        html5: true,
+        format: ["ogg"],
+        loop: true,
+    });
+    tone.play();
+    //console.log("howler", tone);
+    // audioEl.src = busysrc;
+    // audioEl.play();
+    // audioEl.loop = true;
 };
 
 let busyTone = () => {
     console.log("change busytone");
-    let audioEl = document.querySelector(".remote-audio");
-    let waitingsrc = audioEl.getAttribute("data-busysound-ogg");
-    audioEl.src = waitingsrc;
-    audioEl.play();
-    audioEl.loop = true;
+    //let audioEl = document.querySelector(".remote-audio");
+    //let waitingsrc = audioEl.getAttribute("data-busysound-ogg");
+    let tone = new Howl({
+        src: ["./sounds/phonebusy.ogg"],
+        html5: true,
+        format: ["ogg"],
+        loop: true,
+    });
+    tone.play();
 };
 
 // let renderAudio = (stream) => {

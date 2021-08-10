@@ -1,5 +1,6 @@
 import Peer from "peerjs";
 import adapter from "webrtc-adapter";
+import { Howl, Howler } from "howler";
 
 import {
   guid,
@@ -23,11 +24,18 @@ function startPeerOperator() {
   let hasCallActive = false;
   let buttonHang = document.querySelector("#botoncortar");
   let buttonAnswer = document.querySelector("#botoncontestar");
-  let audioRing = document.querySelector("#ringing");
+
+  let audioRing = new Howl({
+    src: ["./sounds/phonering.ogg"],
+    html5: true,
+    loop: true,
+    volume: 0.5,
+    format: ["ogg"],
+  });
 
   // Register with the peer server
   let operatorPeer = new Peer(operatorID, peerServerConfig);
-  audioRing.volume = 0.2;
+  //audioRing.volume = 0.2;
 
   let answerCall = (stream) => {
     console.log("answer call");
