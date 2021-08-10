@@ -24,12 +24,15 @@ function startPeerOperator() {
   let hasCallActive = false;
   let buttonHang = document.querySelector("#botoncortar");
   let buttonAnswer = document.querySelector("#botoncontestar");
+  let onlineIndicator = document.querySelector(".openoperator");
+
+  console.log(onlineIndicator);
 
   let audioRing = new Howl({
     src: ["./sounds/phonering.ogg"],
     html5: true,
     loop: true,
-    volume: 0.5,
+    volume: 0.3,
     format: ["ogg"],
   });
 
@@ -88,6 +91,7 @@ function startPeerOperator() {
         if (hasCallActive !== true) {
           logMessage("Llamada establecida");
           buttonAnswer.classList.add("active");
+          onlineIndicator.classList.add("hidden");
           audioRing.play();
           buttonAnswer.addEventListener("click", function () {
             call.answer(stream); // Answer the call with an audio stream.

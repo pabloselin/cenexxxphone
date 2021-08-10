@@ -219,3 +219,13 @@ button {
         height: 100%;
     }
 }
+
+.openoperator {
+    font-size: 42px;
+    color: #81ff4b;
+    text-shadow: 2px 2px 0 red;
+}
+
+.openoperator.hidden {
+    display: none;
+}

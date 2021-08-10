@@ -16,6 +16,7 @@ function cenexRadio() {
     src: [radioURL],
     html5: true,
     format: ["ogg"],
+    preload: false,
   });
 
   var buttonPlay = document.getElementById("escuchar");
@@ -49,7 +50,7 @@ function cenexRadio() {
   };
 
   //checkStatus
-  checkStatus();
+  //checkStatus();
 
   window.setInterval(checkStatus, 10000);
 

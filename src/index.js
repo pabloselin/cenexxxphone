@@ -1,7 +1,7 @@
 import Peer from "peerjs";
 import animate from "animate.css";
 import adapter from "webrtc-adapter";
-
+import { Howl, Howler } from "howler";
 import {
   guid,
   handlePeerDisconnect,
@@ -36,6 +36,7 @@ function startPeer() {
     renderAudio(stream, hasCallActive, audioEl);
     //Localize stream
     window.localStream = stream;
+    Howler.stop();
   };
 
   // Register with the peer server

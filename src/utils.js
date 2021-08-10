@@ -1,5 +1,3 @@
-import { Howl, Howler } from "howler";
-
 const guid = () => {
     let s4 = () => {
         return Math.floor((1 + Math.random()) * 0x10000)
@@ -63,25 +61,24 @@ let logMessage = (message) => {
     messagesEl.appendChild(newMessage);
 };
 
-let waitingTone = () => {
+const waitingTone = () => {
     console.log("change waitingtone");
     //let audioEl = document.querySelector(".remote-audio");
     //let busysrc = audioEl.getAttribute("data-waitsound-ogg");
+    Howler.stop();
     let tone = new Howl({
         src: ["./sounds/phonewait.ogg"],
         html5: true,
         format: ["ogg"],
         loop: true,
+        preload: true,
     });
     tone.play();
-    //console.log("howler", tone);
-    // audioEl.src = busysrc;
-    // audioEl.play();
-    // audioEl.loop = true;
 };
 
-let busyTone = () => {
+const busyTone = () => {
     console.log("change busytone");
+    Howler.stop();
     //let audioEl = document.querySelector(".remote-audio");
     //let waitingsrc = audioEl.getAttribute("data-busysound-ogg");
     let tone = new Howl({
@@ -100,8 +97,11 @@ let busyTone = () => {
 
 let renderAudio = (stream, hasCallActive, audioEl) => {
     console.log("enabling audio", hasCallActive);
+    //stop all howlers
+
     if (hasCallActive === false) {
         audioEl.autoplay = true;
+
         audioEl.srcObject = stream;
         logMessage("Audio conectado");
         switchCallButtons("call");
