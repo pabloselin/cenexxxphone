@@ -134,12 +134,13 @@ button {
 
 .busyzone {
     max-width: 600px;
-    margin: 24px;
+    margin: 24px auto;
     display: none;
 }
 
 .busyzone.active {
     display: block;
+    text-align: center;
 }
 
 .busyzone video {

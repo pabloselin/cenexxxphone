@@ -16,6 +16,9 @@ function cenexRadio() {
     src: [radioURL],
     html5: true,
     format: ["ogg"],
+    onplay: function () {
+      console.log("playing");
+    },
   });
 
   var buttonPlay = document.getElementById("escuchar");
@@ -59,7 +62,6 @@ function cenexRadio() {
       isPlaying = true;
       console.log(radio);
       radio.play();
-
       buttonPlay.classList.add("animate__heartBeat");
     } else {
       radio.pause();
