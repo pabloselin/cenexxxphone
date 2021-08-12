@@ -7,6 +7,7 @@ function cenexRadio() {
   let statusUrl = "https://radio.cenexxx.cl/status-json.xsl";
   let isPlaying = false;
   let busyZone = document.querySelector(".busyzone");
+
   let callZone = document.querySelector(".callzone");
   let videoBg = document.querySelector("#videobg");
 
@@ -40,14 +41,16 @@ function cenexRadio() {
   };
 
   let triggerLive = (isLive) => {
-    if (isLive === true) {
-      busyZone.classList.add("active");
-      callZone.classList.add("hidden");
-      videoBg.setAttribute("src", videoBg.getAttribute("data-altsrc"));
-    } else {
-      busyZone.classList.remove("active");
-      callZone.classList.remove("hidden");
-      videoBg.setAttribute("src", videoBg.getAttribute("data-origsrc"));
+    if (!window.isCaller) {
+      if (isLive === true) {
+        busyZone.classList.add("active");
+        callZone.classList.add("hidden");
+        videoBg.setAttribute("src", videoBg.getAttribute("data-altsrc"));
+      } else {
+        busyZone.classList.remove("active");
+        callZone.classList.remove("hidden");
+        videoBg.setAttribute("src", videoBg.getAttribute("data-origsrc"));
+      }
     }
   };
 

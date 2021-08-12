@@ -28,7 +28,9 @@ function startPeer() {
 
   let audioEl = document.querySelector(".remote-audio");
   let videoEl = document.querySelector("#callvideo");
+  let callerZone = document.querySelector(".oncallzone");
   let hasCallActive = false;
+  window.isCaller = false;
 
   let callerID = guid();
 
@@ -109,6 +111,8 @@ function startPeer() {
   // Initiate outgoing connection
   let connectToPeer = () => {
     waitingTone();
+    window.isCaller = true;
+    callerZone.classList.add("active");
     logMessage(`Connecting to ${operatorID}...`);
     let conn = peer.connect(operatorID);
     conn.on("data", (data) => {
