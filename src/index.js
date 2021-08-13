@@ -10,11 +10,11 @@ import {
   switchCallButtons,
   busyTone,
   waitingTone,
+  isIOS,
 } from "./utils";
 import { cenexRadio } from "./cenexradio";
 import startPeerOperator from "./operator";
 import peerServerConfig from "./peerServerConfig";
-
 import "./css/style.css";
 import "./assets/fonts/stylesheet.css";
 
@@ -151,6 +151,9 @@ console.log(window.location.pathname);
 if (window.location.pathname === "/") {
   startPeer();
   cenexRadio();
+  if (!isIOS()) {
+    document.querySelector("body").classList.remove("novideobg");
+  }
 } else if (window.location.pathname === "/operadora") {
   startPeerOperator();
 }
