@@ -6,6 +6,10 @@ body {
     background-size: cover;
 }
 
+body.novideobg {
+    background-image: none;
+}
+
 .messages {
     background-color: #ccc;
     text-align: left;
