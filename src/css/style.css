@@ -1,13 +1,13 @@
 body {
     background-color: #555;
     font-family: "loveloblack", sans-serif;
-    background-image: url("../assets/images/videobg2.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: none;
 }
 
 body.novideobg {
-    background-image: none;
+    background-image: url("../assets/images/videobg2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .messages {
