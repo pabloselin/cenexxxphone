@@ -151,9 +151,6 @@ console.log(window.location.pathname);
 if (window.location.pathname === "/") {
   startPeer();
   cenexRadio();
-  if (!isIOS()) {
-    document.querySelector("body").classList.remove("novideobg");
-  }
 } else if (window.location.pathname === "/operadora") {
   startPeerOperator();
 }
